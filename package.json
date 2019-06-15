@@ -1,0 +1,22 @@
+{
+  "name": "gfsh_pcc",
+  "version": "1.0.0",
+  "description": "A console app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "core-js-bundle": "^3.1.3",
+    "express": "^4.17.1",
+    "express-ws": "^4.0.0",
+    "fs": "0.0.1-security",
+    "jsonpath-plus": "^0.20.1",
+    "node-pty": "^0.8.1",
+    "xterm": "^3.14.2",
+    "yargs": "^13.2.4"
+  }
+}

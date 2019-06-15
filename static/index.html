@@ -1,0 +1,80 @@
+<!doctype html>
+  <html>
+    <head>
+      <link rel="stylesheet" href="xterm.css" />
+      <script src="xterm.js"></script>
+      <script  src="/addons/attach/attach.js"></script>
+      <script  src="/addons/fit/fit.js"></script>
+      <script  src="/addons/fullscreen/fullscreen.js"></script>
+      <script  src="/addons/search/search.js"></script>
+      <script src="/minified.js"></script>
+      <script src="/dist/index-umd.js"></script>
+      <style>
+        html, body {
+          height: 100%;
+          margin: 0;
+        }
+
+        .full-height {
+          height: 100%;
+          background: yellow;
+        }
+      </style>
+    </head>
+    <div class="full-height"id="terminal"></div>
+      <script>
+
+        Terminal.applyAddon(attach);
+        Terminal.applyAddon(fit);
+        Terminal.applyAddon(fullscreen);
+        Terminal.applyAddon(search);
+
+        const webSocketUrl = `wss://${ window.location.hostname }/terminals/`;
+        var term = new Terminal();
+        term.open(document.getElementById('terminal'));
+        term.fit();
+        term.focus();
+
+        fetch(`https://${ window.location.hostname }/terminals`, { method: 'POST' }).then(
+          res => {
+            if (!res.ok) {
+              return;
+            }
+            res.text().then(processId => {
+              this.pid = processId;
+              this.socket = new WebSocket(webSocketUrl + processId);
+              this.socket.onopen = () => {
+                console.log("attaching terminal to socket for id " + processId);
+                this.term.attach(this.socket);
+              };
+              this.socket.onclose = () => {
+                this.term.writeln('Server disconnected!');
+                this._connectToServer();
+              };
+              this.socket.onerror = () => {
+                this.term.writeln('Server disconnected!');
+                this._connectToServer();
+              };
+            });
+          },
+         error => {
+           this.failures += 1;
+           if (this.failures === 2) {
+             this.term.writeln('It looks like there is no backend. You have to:');
+           }
+           console.error(error);
+         }
+       );
+
+       var resizeLimiter = null;
+       function fitToSize() {
+          if(resizeLimiter == null){
+            resizeLimiter = setTimeout(function () {
+              resizeLimiter = null;
+              term.fit();
+            }, 100);
+          }
+        };
+      </script>
+    <body onresize="fitToSize()"></body>
+  </html>

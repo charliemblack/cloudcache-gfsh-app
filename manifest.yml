@@ -1,0 +1,9 @@
+---
+applications:
+- name: cloudcache-gfsh-app
+  memory: 512M
+  instances: 1
+  buildpack: nodejs_buildpack
+  command: "node server.js"
+  services:
+   - pcc-dev
