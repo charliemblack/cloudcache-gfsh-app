@@ -23,3 +23,12 @@ Once you are done with `gfsh` you can just exit and you will have a `bash` promp
 On first invocation the app will download and install java and `gfsh`.   You can watch the script doing its job.  Subsequent invocations will just reuse those bits.
 
 If the computer you are using isn't in the allowed addresses list you will get a black screen with no text.    
+
+There seems to be something up with Node 12 and one of the dependant libraries.    So you should use Node version 11 or older.
+
+Example commands to switch node version.
+```bash
+nvm install 10.16.0
+rm -rf node_modules
+npm install
+```
