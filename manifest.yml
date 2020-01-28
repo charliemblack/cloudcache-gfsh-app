@@ -6,4 +6,4 @@ applications:
   buildpack: nodejs_buildpack
   command: "node server.js"
   services:
-   - pcc-dev
+   - cloudcache-dev

@@ -54,14 +54,14 @@ app.post('/terminals', function (req, res) {
     if(!fs.existsSync("jdk8u212-b04")){
       term.write("wget https://gemfire-field.s3.amazonaws.com/OpenJDK8U-jdk_x64_linux_hotspot_8u212b04.tar.gz\r");
       term.write("tar zxf OpenJDK8U-jdk_x64_linux_hotspot_8u212b04.tar.gz\r");
-      term.write("wget https://gemfire-field.s3.amazonaws.com/pivotal-gemfire-9.7.1.tgz\r");
-      term.write("tar zxf pivotal-gemfire-9.7.1.tgz\r");
-      term.write("rm -f pivotal-gemfire-9.7.1.tgz\r");
+      term.write("wget https://gemfire-field.s3.amazonaws.com/pivotal-gemfire-9.8.3.tgz\r");
+      term.write("tar zxf pivotal-gemfire-9.8.3.tgz\r");
+      term.write("rm -f pivotal-gemfire-9.8.3.tgz\r");
       term.write("rm -f OpenJDK8U-jdk_x64_linux_hotspot_8u212b04.tar.gz\r");
     }
     term.write("export JAVA_HOME=`pwd`/jdk8u212-b04\r");
   }
-  term.write("pivotal-gemfire-9.7.1/bin/gfsh\r");
+  term.write("pivotal-gemfire-9.8.3/bin/gfsh\r");
   locator = JSON.stringify(JSONPath({path:jsonPathLocators, json: JSON.parse(process.env.VCAP_SERVICES)})[0]);
   user = JSON.stringify(JSONPath({path:jsonPathUsername, json: JSON.parse(process.env.VCAP_SERVICES)}));
   password = JSON.stringify(JSONPath({path:jsonPathPassword, json: JSON.parse(process.env.VCAP_SERVICES)}));
